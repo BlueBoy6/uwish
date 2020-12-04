@@ -2,7 +2,6 @@ import React, { useReducer, createContext, useContext } from "react";
 import { userInitialState, setName } from "./user/user";
 
 const states = { ...userInitialState };
-console.log("state : ", states);
 
 const actions = {
 	setName,
