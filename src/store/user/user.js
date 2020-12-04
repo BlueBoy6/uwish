@@ -1,6 +1,10 @@
 export const userInitialState = {
-	user: { name: null, connected: false, groups: null, lists: null },
+	user: { jwt: null, name: null, connected: false, groups: null, lists: null },
 };
+
+export function setUser(state, action) {
+	return { ...state, user: action.payload };
+}
 
 export function setName(state, action) {
 	return {

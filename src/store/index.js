@@ -1,10 +1,11 @@
 import React, { useReducer, createContext, useContext } from "react";
-import { userInitialState, setName } from "./user/user";
+import { userInitialState, setName, setUser } from "./user/user";
 
 const states = { ...userInitialState };
 
 const actions = {
 	setName,
+	setUser,
 };
 
 const StoreContext = createContext(states);
