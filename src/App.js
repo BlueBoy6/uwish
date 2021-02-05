@@ -3,7 +3,6 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
-	Link,
 	Redirect,
 } from "react-router-dom";
 import Login from "./pages/Login";
@@ -12,6 +11,8 @@ import { useStore } from "./store/index";
 
 export default function App() {
 	const { state } = useStore();
+	const isAuthenticatedUser = () =>
+		state.user.jwt !== null && state.user.jwt.length > 10;
 	return (
 		<Router>
 			<div>
@@ -20,17 +21,25 @@ export default function App() {
 				</div>
 				<Switch>
 					<Route exact path="/">
-						{!!state.user.jwt ? (
+						{isAuthenticatedUser() ? (
 							<Redirect to="/personnal-space" />
 						) : (
 							<Redirect to="/login" />
 						)}
 					</Route>
 					<Route exact path="/login">
-						{!!state.user.jwt ? <Redirect to="/personnal-space" /> : <Login />}
+						{isAuthenticatedUser() ? (
+							<Redirect to="/personnal-space" />
+						) : (
+							<Login />
+						)}
 					</Route>
 					<Route exact path="/personnal-space">
-						{!!state.user.jwt ? <PersonnalSpace /> : <Redirect to="/login" />}
+						{isAuthenticatedUser() ? (
+							<PersonnalSpace />
+						) : (
+							<Redirect to="/login" />
+						)}
 					</Route>
 				</Switch>
 			</div>

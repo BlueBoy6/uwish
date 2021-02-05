@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { loginConnect } from "../logic/login";
 import { useStore } from "../store/index";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 export default function Login() {
-	const { state, dispatch } = useStore();
-
+	const { dispatch } = useStore();
+	const history = useHistory();
 	const [login, setLogin] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -15,13 +15,21 @@ export default function Login() {
 	function passwordController(e) {
 		setPassword(e.target.value);
 	}
+	function keyController(e) {
+		if (e.key === "Enter") submit();
+	}
 
-	const submit = async () => {
-		const connection = await loginConnect(login, password);
-		dispatch({ type: "setUser", payload: connection.data });
-		console.log("connection", connection);
-		return <Redirect to="/personnal-space" />;
-	};
+	async function submit() {
+		console.log("submit");
+		try {
+			const connection = await loginConnect(login, password);
+			dispatch({ type: "login", payload: connection.data });
+			history.push("/personnal-space");
+			return <Redirect to="/personnal-space" />;
+		} catch (err) {
+			console.error("identifiant ou mot de passe incorrect", err);
+		}
+	}
 
 	return (
 		<div className="login-page">
@@ -41,10 +49,10 @@ export default function Login() {
 					placeholder="password"
 					value={password}
 					onChange={passwordController}
+					onKeyUp={keyController}
 				/>
 			</div>
 			<button onClick={submit}>Joyeux cadeaux !</button>
-			{state.user.jwt ? <Redirect to="/personnal-space" /> : "NOPE"}
 		</div>
 	);
 }

@@ -12,6 +12,6 @@ ReactDOM.render(
 		</StoreProvider>
 	</React.StrictMode>,
 	document.getElementById("root")
-);
+) as any;
 
 reportWebVitals();
