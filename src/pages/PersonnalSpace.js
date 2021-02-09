@@ -12,18 +12,15 @@ export default function Login() {
 
 	const disconnect = async () => {
 		dispatch({ type: "logout" });
-		<Redirect to="/login" />;
+		history.push("/login");
 	};
 
 	useEffect(() => {
-		console.log("something hapend");
 		(async function anyNameFunction() {
 			const result = await api("get", "/groups");
 			console.log(result);
 		})();
 	}, []);
-
-	console.log("state", state);
 
 	return (
 		<div className="personnal-space">

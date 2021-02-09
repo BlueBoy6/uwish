@@ -20,14 +20,13 @@ export default function Login() {
 	}
 
 	async function submit() {
-		console.log("submit");
 		try {
 			const connection = await loginConnect(login, password);
 			dispatch({ type: "login", payload: connection.data });
+			console.log("submit", history.push);
 			history.push("/personnal-space");
-			return <Redirect to="/personnal-space" />;
 		} catch (err) {
-			console.error("identifiant ou mot de passe incorrect", err);
+			console.log(err);
 		}
 	}
 

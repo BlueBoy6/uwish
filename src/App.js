@@ -11,8 +11,15 @@ import { useStore } from "./store/index";
 
 export default function App() {
 	const { state } = useStore();
-	const isAuthenticatedUser = () =>
-		state.user.jwt !== null && state.user.jwt.length > 10;
+
+	function CheckAuthUser({ children }) {
+		if (state.user.jwt !== null && state.user.jwt.length > 110) {
+			return <div className="is-authenticated-user">{children}</div>;
+		} else {
+			return <Login />;
+		}
+	}
+
 	return (
 		<Router>
 			<div>
@@ -21,25 +28,19 @@ export default function App() {
 				</div>
 				<Switch>
 					<Route exact path="/">
-						{isAuthenticatedUser() ? (
-							<Redirect to="/personnal-space" />
-						) : (
-							<Redirect to="/login" />
-						)}
+						<CheckAuthUser>
+							<PersonnalSpace />
+						</CheckAuthUser>
 					</Route>
 					<Route exact path="/login">
-						{isAuthenticatedUser() ? (
-							<Redirect to="/personnal-space" />
-						) : (
+						<CheckAuthUser>
 							<Login />
-						)}
+						</CheckAuthUser>
 					</Route>
 					<Route exact path="/personnal-space">
-						{isAuthenticatedUser() ? (
+						<CheckAuthUser>
 							<PersonnalSpace />
-						) : (
-							<Redirect to="/login" />
-						)}
+						</CheckAuthUser>
 					</Route>
 				</Switch>
 			</div>
