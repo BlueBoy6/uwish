@@ -1,16 +1,17 @@
 import React, { useReducer, createContext, useContext } from "react";
-import { userInitialState, login, logout, setUserGroups } from "./user/user";
+import { user, login, logout } from "store/user/user";
+import { groups, setGroups } from "store/groups/groups";
 import { State } from "./storeTypes";
 
-const states: State = { ...userInitialState };
-const actions = [login, setUserGroups, logout];
+const states: State = { user, groups };
+const actions = [login, logout, setGroups];
 
 const AppContext = createContext<any>(states);
 
 function reducerActions(state: any, payload: any) {
+	console.log(payload);
 	const dispatcher = actions.find((action) => action.name === payload.type);
-	console.log("dispatch and payload", dispatcher, payload);
-	if (dispatcher) return dispatcher(state, payload);
+	if (dispatcher) return dispatcher(state, payload.payload);
 	throw new Error(`Aucune action "${payload.type}" n'existe.`);
 }
 

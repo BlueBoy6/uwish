@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { loginConnect } from "../logic/login";
-import { useStore } from "../store/index";
+import { loginConnect } from "infra/login";
+import { useStore } from "store/index";
 import { Redirect, useHistory } from "react-router-dom";
 
 export default function Login() {
 	const { dispatch } = useStore();
 	const history = useHistory();
+
 	const [login, setLogin] = useState("");
 	const [password, setPassword] = useState("");
+	const [messageLogin, setMessageLogin] = useState("");
 
 	function loginController(e) {
 		setLogin(e.target.value);
@@ -20,13 +22,13 @@ export default function Login() {
 	}
 
 	async function submit() {
-		try {
-			const connection = await loginConnect(login, password);
-			dispatch({ type: "login", payload: connection.data });
-			console.log("submit", history.push);
+		const connection = await loginConnect(login, password);
+		if (connection.success) {
+			dispatch({ type: "login", payload: connection.response });
+			dispatch({ type: "setGroups", payload: connection.response.user.groups });
 			history.push("/personnal-space");
-		} catch (err) {
-			console.log(err);
+		} else {
+			setMessageLogin(connection.message);
 		}
 	}
 
@@ -52,6 +54,7 @@ export default function Login() {
 				/>
 			</div>
 			<button onClick={submit}>Joyeux cadeaux !</button>
+			{messageLogin ? messageLogin : ""}
 		</div>
 	);
 }

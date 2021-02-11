@@ -1,16 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
 	Redirect,
 } from "react-router-dom";
-import Login from "./pages/Login";
-import PersonnalSpace from "./pages/PersonnalSpace";
-import { useStore } from "./store/index";
+import Login from "pages/Login";
+import PersonnalSpace from "pages/PersonnalSpace";
+import { useStore } from "store/index";
+import { getGroups } from "infra/groups";
 
 export default function App() {
-	const { state } = useStore();
+	const { state, dispatch } = useStore();
+	const [isLoading, setLoading] = useState(false);
+
+	useEffect(async function () {
+		console.log("isLoading", isLoading);
+		if (state.groups === null && state.user.jwt) {
+			setLoading(true);
+			const groups = await getGroups(state.user.jwt);
+			if (groups.success) {
+				dispatch({ type: "setGroups", payload: groups.response });
+				setLoading(false);
+			}
+		}
+	});
 
 	function CheckAuthUser({ children }) {
 		if (state.user.jwt !== null && state.user.jwt.length > 110) {
@@ -23,9 +37,6 @@ export default function App() {
 	return (
 		<Router>
 			<div>
-				<div>
-					<h2>Menu</h2>
-				</div>
 				<Switch>
 					<Route exact path="/">
 						<CheckAuthUser>

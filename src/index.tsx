@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
-import { StoreProvider } from "./store/index";
+import Router from "router/router";
+import { StoreProvider } from "store/index";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
 	<React.StrictMode>
 		<StoreProvider>
-			<App />
+			<Router />
 		</StoreProvider>
 	</React.StrictMode>,
 	document.getElementById("root")

@@ -1,8 +1,3 @@
-export type Groups = {
-	id: Number;
-	Name: String;
-};
-
 export type Wish = {
 	id: Number;
 	name: String;
@@ -18,6 +13,5 @@ export type Wishlists = {
 export type User = {
 	jwt: String | null;
 	userName: String | null;
-	groups: Groups[] | null;
 	wishlists: Wishlists[] | null;
 };
