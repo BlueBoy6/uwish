@@ -1,17 +1,26 @@
 import { User } from "./userTypes";
 import { State } from "../storeTypes";
+import { loginConnect } from "infra/login";
 
 export const user = {
 	jwt: sessionStorage["user-uwish-jwt"] || null,
 	userName: sessionStorage["user-uwish-name"] || null,
-	wishlists: null,
 } as User;
 
-export function login(state: State, payload: any) {
-	sessionStorage["user-uwish-jwt"] = payload.jwt;
-	sessionStorage["user-uwish-name"] = payload.user.username;
-	state.user.jwt = payload.jwt;
-	state.user.userName = payload.user.username;
+export async function login(
+	state: State,
+	{
+		identifier,
+		password,
+		redirectPage,
+	}: { identifier: string; password: string; redirectPage: any }
+) {
+	const connection = (await loginConnect(identifier, password)) as any;
+
+	sessionStorage["user-uwish-jwt"] = connection.jwt;
+	state.user = { ...connection.user, jwt: connection.jwt };
+	console.log("state : ", state);
+	redirectPage();
 	return state;
 }
 

@@ -3,9 +3,9 @@ import axios from "axios";
 const apiUrl = "https://uwish.david6.fr";
 
 export default {
-	get: async (...params) => await ApiCall(config("get", ...params)),
-	post: async (...params) => await ApiCall(config("post", ...params)),
-	put: async (...params) => await ApiCall(config("post", ...params)),
+	get: (...params) => ApiCall(config("get", ...params)),
+	post: (...params) => ApiCall(config("post", ...params)),
+	put: (...params) => ApiCall(config("put", ...params)),
 };
 
 const config = (method, url, data, headers) => ({
@@ -22,7 +22,7 @@ const config = (method, url, data, headers) => ({
 async function ApiCall(conf) {
 	try {
 		const result = await axios(conf);
-		return { success: true, response: result.data };
+		return { success: true, data: result.data };
 	} catch (err) {
 		console.error(`une erreur est arrivé lors de la requête : ${err.message}`);
 		return {
