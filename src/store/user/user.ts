@@ -1,6 +1,5 @@
 import { User } from "./userTypes";
 import { State } from "../storeTypes";
-import { loginConnect } from "infra/login";
 
 export const user = {
 	jwt: sessionStorage["user-uwish-jwt"] || null,
@@ -8,20 +7,12 @@ export const user = {
 	isLogged: false,
 } as User;
 
-export const login = async (
-	state: State,
-	{
-		identifier,
-		password,
-		redirectToPersonnalSpace,
-	}: { identifier: string; password: string; redirectToPersonnalSpace: any }
-) => {
-	const connection = await loginConnect(identifier, password);
-	console.log("connection : ", connection);
-	if (connection.user.confirmed) {
-		sessionStorage["user-uwish-jwt"] = connection.jwt;
-		state.user = { ...connection.user, jwt: connection.jwt, isLogged: true };
-		redirectToPersonnalSpace();
+export const login = (state: State, user: any) => {
+	console.log("user received in store", user.user.confirmed);
+	if (user.user.confirmed) {
+		sessionStorage["user-uwish-jwt"] = user.jwt;
+		state.user = { ...user.user, jwt: user.jwt, isLogged: true };
+		console.log("storeee : ", state);
 		return state;
 	}
 	return state;

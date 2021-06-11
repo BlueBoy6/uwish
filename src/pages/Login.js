@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { useStore } from "store/index";
 import { Redirect, useHistory } from "react-router-dom";
+import { loginConnect } from "infra/login";
 
 export default function Login() {
 	const { state, dispatch } = useStore();
@@ -23,19 +24,18 @@ export default function Login() {
 	}
 
 	function redirectToPersonnalSpace() {
-		console.log(state);
+		console.log("redirect : ", state);
 		history.push("/personnal-space");
 	}
 
-	function submit() {
+	async function submit() {
+		const connect = await loginConnect(identifier, password);
+		console.log("connect : ", connect);
 		dispatch({
 			type: "login",
-			payload: {
-				identifier,
-				password,
-				redirectToPersonnalSpace,
-			},
+			payload: connect,
 		});
+		redirectToPersonnalSpace();
 	}
 
 	return (
