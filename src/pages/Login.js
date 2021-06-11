@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useStore } from "store/index";
 import { Redirect, useHistory } from "react-router-dom";
 
 export default function Login() {
-	const { dispatch } = useStore();
+	const { state, dispatch } = useStore();
 	const history = useHistory();
 
 	const [identifier, setIdentifier] = useState("");
 	const [password, setPassword] = useState("");
 	const [messageLogin, setMessageLogin] = useState("");
+	const [isLogged, setLogged] = useState(false);
 
 	function loginController(e) {
 		setIdentifier(e.target.value);
@@ -21,15 +22,19 @@ export default function Login() {
 		if (e.key === "Enter") submit();
 	}
 
-	const redirectPage = () => {
-		console.log("here we go bitches");
+	function redirectToPersonnalSpace() {
+		console.log(state);
 		history.push("/personnal-space");
-	};
+	}
 
 	function submit() {
 		dispatch({
 			type: "login",
-			payload: { identifier, password, redirectPage },
+			payload: {
+				identifier,
+				password,
+				redirectToPersonnalSpace,
+			},
 		});
 	}
 

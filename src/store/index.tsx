@@ -4,6 +4,7 @@ import { groups, setGroups } from "store/groups/groups";
 import { State } from "./storeTypes";
 
 const states: State = { user, groups };
+
 const actions = [login, logout, setGroups];
 
 const AppContext = createContext<any>(states);

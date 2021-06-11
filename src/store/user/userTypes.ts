@@ -1,17 +1,18 @@
 export type Wish = {
-	id: Number;
-	name: String;
-	url: String;
+	id: number;
+	name: string;
+	url: string;
 };
 
 export type Wishlists = {
-	id: Number;
-	Title: String;
+	id: number;
+	Title: string;
 	Wishes: Wish[];
 };
 
 export type User = {
-	jwt: String | null;
-	userName: String | null;
+	jwt: string | null;
+	userName: string | null;
+	isLogged: boolean;
 	wishlists: Wishlists[] | null;
 };

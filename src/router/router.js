@@ -12,9 +12,9 @@ import { useStore } from "store/index";
 export default function App() {
 	const { state, dispatch } = useStore();
 
-	const user = async () => await state;
 	function CheckAuthUser({ children }) {
-		if (usar.jwt !== null && usar.jwt.length > 110) {
+		console.log("state :", state);
+		if (state.user.isLogged) {
 			return <div className="is-authenticated-user">{children}</div>;
 		} else {
 			return <Login />;
@@ -25,14 +25,12 @@ export default function App() {
 		<Router>
 			<div>
 				<Switch>
+					<Route exact path="/login">
+						<Login />
+					</Route>
 					<Route exact path="/">
 						<CheckAuthUser>
 							<PersonnalSpace />
-						</CheckAuthUser>
-					</Route>
-					<Route exact path="/login">
-						<CheckAuthUser>
-							<Login />
 						</CheckAuthUser>
 					</Route>
 					<Route exact path="/personnal-space">
