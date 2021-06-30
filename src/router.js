@@ -7,10 +7,12 @@ import {
 
 import { ProvideAuth, useAuth } from "context/auth";
 import { ProvideGroup } from "context/group";
-import Login from "pages/login";
-import PersonnalSpace from "pages/personnalSpace";
-import Group from "pages/group";
-import Page from "components/layout/page";
+import Login from "pages/Login";
+import PersonnalSpace from "pages/PersonnalSpace";
+import Group from "pages/Group";
+import WishListInGroup from "pages/WishListInGroup";
+import Page from "components/layout/Page";
+import "index.css";
 
 function PrivateRoute({ children, ...rest }) {
   let auth = useAuth();
@@ -48,9 +50,14 @@ export default function AppRouter() {
             <PrivateRoute path="/personnal-space">
               <PersonnalSpace />
             </PrivateRoute>
-            <PrivateRoute path="/group/:idGroup">
+            <PrivateRoute exact path="/group/:idGroup">
               <ProvideGroup>
                 <Group />
+              </ProvideGroup>
+            </PrivateRoute>
+            <PrivateRoute path="/group/:idGroup/wishlist/:idWishlist">
+              <ProvideGroup>
+                <WishListInGroup />
               </ProvideGroup>
             </PrivateRoute>
           </Switch>

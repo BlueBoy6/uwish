@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = "https://uwish.david6.fr";
+const apiUrl = "http://localhost:2333";
 
 export default {
   get: ({ url, data, headers }) =>

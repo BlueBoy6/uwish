@@ -1,0 +1,48 @@
+@font-face {
+  font-family: "Comfortaa";
+  font-weight: 300;
+  src: local("Comfortaa"), url(./fonts/Comfortaa-Light.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Comfortaa";
+  font-weight: 400;
+  src: local("Comfortaa"), url(./fonts/Comfortaa-Regular.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Comfortaa";
+  font-weight: 700;
+  src: local("Comfortaa"), url(./fonts/Comfortaa-Bold.ttf) format("truetype");
+}
+
+div,
+p,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input[type="text"],
+input[type="password"],
+button,
+label {
+  font-family: Comfortaa, sans-serif;
+  color: #6c757d;
+  text-decoration: none;
+}
+
+/* 
+
+
+Blue : #227C9D
+Light green : #17C3B2 
+Yellow : #FFCB77
+white cream : #FEF9EF
+red coral : #FE6D73
+gray : 6C757D
+black : 212529
+white : F8F9FA
+
+
+*/

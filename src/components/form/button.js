@@ -15,7 +15,6 @@ const Button = styled.button`
   background: linear-gradient(135deg, #227c9d 10%, #17c3b2 100%);
   transition: 0.3s;
   color: white;
-  font-family: Helvetica, Arial, Sans-Serif;
   font-size: 1rem;
   margin: 20px 0;
   padding: 10px 30px;

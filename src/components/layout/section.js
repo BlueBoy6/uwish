@@ -27,7 +27,8 @@ const SectionTitle = styled.h1`
   display: flex;
   width: 100%;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
   color: #fe6d73;
 `;
 
@@ -42,5 +43,5 @@ const SectionContainer = styled.section`
   max-width: 700px;
   min-width: 300px;
   margin: auto;
-  font-family: Helvetica, Arial, Sans-Serif;
+  margin-top: 40px;
 `;

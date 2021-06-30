@@ -18,13 +18,11 @@ export default function inputText({ value, onChange, placeholder, label }) {
 
 const Label = styled.label`
   font-size: 0.7rem;
-  color: #cccccc;
 `;
 
 const Input = styled.input`
-font-family: Helvetica, Arial, Sans-Serif;
-font-size: 1rem;
- width: 100%;
+  font-size: 1rem;
+  width: 100%;
   border: 1px solid #cecece;
   background: #efefef;
   padding: 10px 12px;

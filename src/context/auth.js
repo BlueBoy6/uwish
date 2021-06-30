@@ -24,7 +24,16 @@ function useProvideAuth() {
       },
     });
     if (response.success) {
-      setUser({ ...response.data, ...response.data.user });
+      const { id, email, bands, username, wishlists } = response.data.user;
+      setUser({
+        jwt: response.data.jwt,
+        id,
+        email,
+        bands,
+        username,
+        wishlists,
+        groups: response.data.user.bands,
+      });
     }
     return { success: true };
   }

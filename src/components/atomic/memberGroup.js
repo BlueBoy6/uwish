@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 export default function memberGroup({ user }) {
-  console.log("user : ", user);
   return <Member>{user.username}</Member>;
 }
 

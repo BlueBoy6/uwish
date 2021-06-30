@@ -9,5 +9,4 @@ const PageLayout = styled.div`
   background: #fef9ef;
   padding: 20px;
   min-height: calc(100vh - 40px);
-  font-family: Helvetica, Arial, Sans-Serif;
 `;

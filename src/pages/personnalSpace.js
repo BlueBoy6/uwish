@@ -1,43 +1,42 @@
 import React from "react";
 import { useAuth } from "context/auth";
-import GroupResumeCard from "components/layout/groupResumeCard";
-import Section from "components/layout/section";
+import GroupResumeCard from "components/layout/GroupResumeCard";
+import WishlistResumeCard from "components/layout/WishlistResumeCard";
+import Section from "components/layout/Section";
 import styled from "styled-components";
 
 export default function personnalSpace() {
   const authContext = useAuth();
-  console.log(authContext);
   return (
-    <Section>
-      <SectionTitle>
-        Espace perso
-      </SectionTitle>
-      <Groups>
-        <GroupsTitle>
-          vos groupes :
-        </GroupsTitle>
-        {authContext.user.groups.map((group) => (
-          <GroupResumeCard key={group.id} group={group} />
+    <>
+      {authContext.user.bands && (
+        <Section title="Tes groupes">
+          <Groups>
+            <GroupResumeCardContainer>
+              {authContext.user.bands.map((group) => (
+                <GroupResumeCard key={group.id} group={group} />
+              ))}
+            </GroupResumeCardContainer>
+          </Groups>
+        </Section>
+      )}
+      <Section title="Tes listes de souhaits">
+        {authContext.user.wishlists.map((wishlist) => (
+          <WishlistResumeCard key={wishlist.id} wishlist={wishlist} />
         ))}
-      </Groups>
-    </Section>
+      </Section>
+    </>
   );
 }
 
-const SectionTitle = styled.h1`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  font-size: 1.5rem;
-  color: #FE6D73;
-`;
-
 const Groups = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  width: 100%;
+  grid-row-gap: 20px;
 `;
 
-const GroupsTitle = styled.div`
-font-size: 1.1rem;
-width: 100%;
-`
+const GroupResumeCardContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 20px;
+`;

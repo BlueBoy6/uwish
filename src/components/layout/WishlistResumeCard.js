@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
-export default function GroupResumeCard({ group }) {
-  const groupName = group.name;
+export default function GroupResumeCard({ wishlist }) {
+  const wishlistName = wishlist.name;
   let history = useHistory();
-  const enterToGroup = () => history.push(`/group/${group.id}`);
+  const enterToWishlist = () => history.push(`/wishlist/${wishlist.id}`);
   return (
-    <ResumeCard data-group-name={group.name} onClick={enterToGroup}>
-      {groupName}
+    <ResumeCard data-wishlist-name={wishlist.name} onClick={enterToWishlist}>
+      {wishlistName}
     </ResumeCard>
   );
 }
@@ -24,5 +24,3 @@ const ResumeCard = styled.div`
   cursor: pointer;
   text-align: center;
 `;
-
-GroupResumeCard.propTypes = {};

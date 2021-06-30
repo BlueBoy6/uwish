@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "context/auth";
-import InputText from "components/form/inputText";
-import InputPassword from "components/form/inputPassword";
-import Button from "components/form/button";
-import Section from "components/layout/section";
+import InputText from "components/form/InputText";
+import InputPassword from "components/form/InputPassword";
+import Button from "components/form/Button";
+import Section from "components/layout/Section";
 import styled from "styled-components";
 
 const login = (props) => {
   let history = useHistory();
   const authContext = useAuth();
+  const [loading, setLoading] = useState(false);
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
@@ -27,6 +28,7 @@ const login = (props) => {
   }
 
   async function submit() {
+    setLoading(true);
     const authentication = await authContext.signin({ identifier, password });
     if (authentication.success) {
       history.push("/personnal-space");
@@ -36,23 +38,29 @@ const login = (props) => {
   return (
     <Section title="Connecte-toi !" internAlign="center">
       <MaxSpace>
-        <InputText
-          label="Identifiant"
-          placeholder="login"
-          value={identifier}
-          onChange={loginController}
-        />
+        {!loading ? (
+          <div>
+            <InputText
+              label="Identifiant"
+              placeholder="login"
+              value={identifier}
+              onChange={loginController}
+            />
 
-        <InputPassword
-          label="Mot de passe"
-          type="password"
-          placeholder="password"
-          onKeyUp={keyController}
-          value={password}
-          onChange={passwordController}
-        />
+            <InputPassword
+              label="Mot de passe"
+              type="password"
+              placeholder="password"
+              onKeyUp={keyController}
+              value={password}
+              onChange={passwordController}
+            />
 
-        <Button onClick={submit}>C'est parti mon kiki !</Button>
+            <Button onClick={submit}>C'est parti mon kiki !</Button>
+          </div>
+        ) : (
+          <div>Laisses moi le temps de deviner qui tu es..</div>
+        )}
       </MaxSpace>
     </Section>
   );

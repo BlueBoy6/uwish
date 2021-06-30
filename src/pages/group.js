@@ -5,21 +5,19 @@ import { useAuth } from "context/auth";
 import { useGroup } from "context/group";
 
 import MemberGroup from "components/atomic/memberGroup";
-import Section from "components/layout/section";
-import Button from "components/form/button";
+import Wishlist from "components/organism/Wishlist";
+import Section from "components/layout/Section";
+import Button from "components/form/Button";
 
 export default function Group(...props) {
   let history = useHistory();
   let { idGroup } = useParams();
   const authContext = useAuth();
   const groupContext = useGroup();
-  const groupMatched = authContext.user.groups.find((group) => {
-    console.log("group", group);
-    console.log("idGroup", idGroup);
-    return group.id === Number(idGroup);
-  });
+  const groupMatched = authContext.user.groups.find(
+    (group) => group.id === Number(idGroup)
+  );
 
-  console.log("groupMatched", groupMatched);
   if (!groupMatched) {
     return (
       <div>
@@ -35,20 +33,34 @@ export default function Group(...props) {
   }
   const getGroup = async () =>
     groupContext.getGroup({ token: authContext.user.jwt, idGroup });
+
   useEffect(() => {
     if (groupContext.group === null) getGroup();
   });
-  if (groupContext.group === null) return <p>Chargement... petit chenapan..</p>;
+
+  const { group } = groupContext;
+
+  if (group === null) return <p>Chargement... petit chenapan..</p>;
   return (
     <>
       <Link to="/personnal-space">Retour à la tour</Link>
-      <Section title={groupContext.group.Name} intern-align="left">
+      <Section title={groupContext.group.name} intern-align="left">
         <MembersLabel>Membres du groupe :</MembersLabel>
         <MemberGroups>
           {groupContext.group.users.map((user) => (
-            <MemberGroup user={user} />
+            <MemberGroup user={user} key={user.id} />
           ))}
         </MemberGroups>
+        <WishLists>
+          {group.wishlists.map((wishlist) => (
+            <Link
+              key={wishlist.id}
+              to={`/group/${group.id}/wishlist/${wishlist.id}`}
+            >
+              <Wishlist wishlist={wishlist} othersMembers={group.users} />
+            </Link>
+          ))}
+        </WishLists>
       </Section>
     </>
   );
@@ -64,4 +76,14 @@ const MemberGroups = styled.div`
   display: flex;
   max-width: 500px;
   flex-wrap: wrap;
+`;
+
+const WishLists = styled.div`
+  position: relative;
+  width: 100%;
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
 `;
