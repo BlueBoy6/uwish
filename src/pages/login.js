@@ -59,7 +59,7 @@ const login = (props) => {
             <Button onClick={submit}>C'est parti mon kiki !</Button>
           </div>
         ) : (
-          <div>Laisses moi le temps de deviner qui tu es..</div>
+          <div>Attend, je te cherche..</div>
         )}
       </MaxSpace>
     </Section>

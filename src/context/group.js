@@ -1,12 +1,12 @@
 import React, { useContext, createContext, useState } from "react";
 import Api from "infra/api/api";
 
-export const groupContext = createContext();
+export const GroupContext = createContext();
 
 export function ProvideGroup({ children }) {
   const group = useProvideGroup();
   return (
-    <groupContext.Provider value={group}>{children}</groupContext.Provider>
+    <GroupContext.Provider value={group}>{children}</GroupContext.Provider>
   );
 }
 
