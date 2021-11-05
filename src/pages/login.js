@@ -13,6 +13,7 @@ const login = (props) => {
   const [loading, setLoading] = useState(false);
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [errorAuthent, setErrorAuthent] = useState(false);
 
   function loginController(e) {
     console.log(authContext);
@@ -32,6 +33,9 @@ const login = (props) => {
     const authentication = await authContext.signin({ identifier, password });
     if (authentication.success) {
       history.push("/personnal-space");
+    } else {
+      setLoading(false);
+      setErrorAuthent(true);
     }
   }
 
@@ -51,7 +55,7 @@ const login = (props) => {
               label="Mot de passe"
               type="password"
               placeholder="password"
-              onKeyUp={keyController}
+              onKeyPress={keyController}
               value={password}
               onChange={passwordController}
             />
@@ -61,6 +65,8 @@ const login = (props) => {
         ) : (
           <div>Attend, je te cherche..</div>
         )}
+        {errorAuthent &&
+          "Tu t'es trompé copain ! Corriges tes accès ou call ton admin."}
       </MaxSpace>
     </Section>
   );

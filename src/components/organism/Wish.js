@@ -7,30 +7,23 @@ export default function Wish({ wish, onDelete, onModifiedWish }) {
   const [locationShowed, setLocationShowed] = useState(false);
   const [doChangeName, setChangeName] = useState(false);
   const [newWishLabel, setNewWishLabel] = useState(wish.name);
-  let inputWishRef;
 
   const handlePan = (e) => {
-    if (!locationShowed && e.additionalEvent === "panleft")
+    if (
+      (!locationShowed && e.additionalEvent === "panleft") ||
+      (!optionsShowed && e.additionalEvent === "panright")
+    )
       setOptionsShowed(true);
-    if (!locationShowed && e.additionalEvent === "panright")
+    if (
+      (!locationShowed && e.additionalEvent === "panright") ||
+      (!optionsShowed && e.additionalEvent === "panleft")
+    )
       setOptionsShowed(false);
-    if (!optionsShowed && e.additionalEvent === "panright")
-      setLocationShowed(true);
-    if (!optionsShowed && e.additionalEvent === "panleft")
-      setLocationShowed(false);
   };
-  useEffect(() => {
-    if (doChangeName) inputWishRef = React.createRef();
-  });
 
   const handlePress = (e) => {
-    if (e.isFirst) {
-      setChangeName(true);
-      console.log("inputWishRef : ", inputWishRef);
-    }
+    if (e.isFirst) setChangeName(true);
   };
-
-  const handleNewName = (e) => setNewWishLabel(e.target.value);
 
   const optionsHammer = {
     recognizers: {
@@ -46,24 +39,27 @@ export default function Wish({ wish, onDelete, onModifiedWish }) {
   };
 
   return (
-    <Hammer onPanEnd={handlePan} onPress={handlePress} options={optionsHammer}>
+    <Hammer
+      onPanEnd={handlePan}
+      onPress={handlePress}
+      onDoubleClick={() => setChangeName(true)}
+      options={optionsHammer}
+    >
       <WishItemContainer>
-        {!doChangeName && (
+        {!doChangeName ? (
           <WishItem
             locationShowed={locationShowed}
             optionsShowed={optionsShowed}
           >
             {wish.name}
           </WishItem>
-        )}
-        {doChangeName && (
+        ) : (
           <WishItemInput
             type="text"
             value={newWishLabel}
-            onChange={handleNewName}
+            onChange={(e) => setNewWishLabel(e.target.value)}
             optionsShowed={optionsShowed}
             onBlur={leaveField}
-            ref={inputWishRef}
           />
         )}
         <WishItemOptions>
@@ -81,7 +77,7 @@ const WishItem = styled.div`
   position: relative;
   z-index: 1;
   border: 2px solid #17c3b2;
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 10px;
   margin-bottom: 10px;
   background: linear-gradient(124deg, #f4f4f4 0%, #ffffff 100%);
@@ -103,7 +99,7 @@ const WishItemInput = styled.input`
   outline: none;
   z-index: 1;
   border: 2px solid #17c3b2;
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 10px;
   margin-bottom: 10px;
   background: linear-gradient(124deg, #f4f4f4 0%, #ffffff 100%);
@@ -130,6 +126,6 @@ const WishItemDelete = styled.div`
   justify-items: center;
   align-items: center;
   padding: 0 10px;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
 `;

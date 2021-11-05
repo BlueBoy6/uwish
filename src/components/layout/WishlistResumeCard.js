@@ -1,15 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
 export default function GroupResumeCard({ wishlist }) {
-  const wishlistName = wishlist.name;
   let history = useHistory();
   const enterToWishlist = () => history.push(`/wishlist/${wishlist.id}`);
   return (
     <ResumeCard data-wishlist-name={wishlist.name} onClick={enterToWishlist}>
-      {wishlistName}
+      {wishlist.name}
     </ResumeCard>
   );
 }

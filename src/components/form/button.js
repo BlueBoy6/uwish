@@ -1,14 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-// import PropTypes from 'prop-types'
 
 export default function button({ children, onClick }) {
   return <Button onClick={onClick}>{children}</Button>;
 }
-
-// Button.propTypes = {
-
-// }
 
 const Button = styled.button`
   width: 100%;

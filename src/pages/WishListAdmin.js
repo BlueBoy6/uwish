@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 
 import Section from "components/layout/Section";
 import Button from "components/atomic/Button";
+import BackPage from "components/atomic/BackPage";
 import Wish from "components/organism/Wish";
 import { useWishlist } from "context/wishlist";
 import { useAuth } from "context/auth";
 import styled from "styled-components";
+import InputAddField from "components/form/InputAddField";
 
 export default function WishListAdmin() {
   const [isModified, setModified] = useState(false);
@@ -38,14 +40,11 @@ export default function WishListAdmin() {
       ...wishlist,
       wishes: wishlist.Wishes.map((wish) => {
         if (wish.id === wishModified.id) {
-          console.log("wish", wish);
-          console.log("wishModified", wishModified);
           return wishModified;
         }
         return wish;
       }),
     };
-    console.log("wishlistModified : ", wishlistModified);
     modifyWishlist({ wishlistModified });
   };
 
@@ -53,41 +52,48 @@ export default function WishListAdmin() {
     updateWishlist({ token: user.jwt });
   };
 
-  console.log("wishlist : ", wishlist);
+  const addWish = (e) => false;
 
   if (wishlist !== null && wishlist.user.id === user.id)
     return (
-      <Section title={wishlist.name}>
-        <Group>
-          <p>
-            Tu partages ta liste avec{" "}
-            <BoldSelecter>{wishlist.band.name}</BoldSelecter>
-          </p>
-        </Group>
-        <ListIsPublic>
-          <p>
-            Elle est{" "}
-            <BoldSelecter onClick={toggleIsPublic}>
-              {wishlist.isPublic ? "visible" : "invisible"}
-            </BoldSelecter>{" "}
-            pour ton groupe
-          </p>
-        </ListIsPublic>
-        <ListWishes>
-          <h3>Tes souhaits</h3>
-          {wishlist.Wishes.map((wish) => (
-            <Wish
-              wish={wish}
-              key={wish.id}
-              onDelete={deleteWish}
-              onModifiedWish={modifiedWish}
+      <>
+        <BackPage />
+        <Section title={wishlist.name}>
+          <Group>
+            <p>
+              Tu partages ta liste avec{" "}
+              <BoldSelecter>{wishlist.band.name}</BoldSelecter>
+            </p>
+          </Group>
+          <ListIsPublic>
+            <p>
+              Elle est{" "}
+              <BoldSelecter onClick={toggleIsPublic}>
+                {wishlist.isPublic ? "visible" : "invisible"}
+              </BoldSelecter>{" "}
+              pour ton groupe
+            </p>
+          </ListIsPublic>
+          <ListWishes>
+            <h3>Tes souhaits</h3>
+            {wishlist.Wishes.map((wish) => (
+              <Wish
+                wish={wish}
+                key={wish.id}
+                onDelete={deleteWish}
+                onModifiedWish={modifiedWish}
+              />
+            ))}
+            <InputAddField
+              placeholder="Dis moi ce dont tu as besoin !"
+              addValue={addWish}
             />
-          ))}
-        </ListWishes>
-        {isModified && (
-          <Button onClick={saveWishList}>Sauvegarde moi ça !</Button>
-        )}
-      </Section>
+          </ListWishes>
+          {isModified && (
+            <Button onClick={saveWishList}>Sauvegarde moi ça !</Button>
+          )}
+        </Section>
+      </>
     );
   else if (wishlist !== null && wishlist.user.id !== user.id)
     return <Section title="Alors alors ? On essaie de tricher ?" />;
@@ -109,7 +115,7 @@ const ListIsPublic = styled.div`
 const BoldSelecter = styled.b`
   padding: 3px;
   background-color: rgba(23, 195, 178, 0.25);
-  border-radius: 5px;
+  border-radius: 10px;
   transition: 0.15s ease;
   cursor: pointer;
   :hover {

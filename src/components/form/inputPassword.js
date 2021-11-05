@@ -2,7 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import Field from "components/form/Field";
 
-export default function inputText({ value, onChange, placeholder, label }) {
+export default function inputText({
+  value,
+  onChange,
+  placeholder,
+  label,
+  onKeyUp,
+  onKeyPress,
+}) {
   return (
     <Field>
       <Label>{label}</Label>
@@ -11,6 +18,7 @@ export default function inputText({ value, onChange, placeholder, label }) {
         value={value}
         placeholder={placeholder}
         onChange={onChange}
+        onKeyPress={onKeyPress}
       />
     </Field>
   );

@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 export default function personnalSpace() {
   const authContext = useAuth();
+  console.log("authContext : ", authContext);
   return (
     <>
       {authContext.user.bands && (

@@ -40,7 +40,7 @@ const WishList = styled.div`
   position: relative;
   display: grid;
   width: 100%;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   box-shadow: 0px 2px 6px 0px rgba(254, 109, 115, 0.3);
   cursor: pointer;
@@ -74,7 +74,7 @@ const CreatorOfList = styled.div`
   position: relative;
   height: 100px;
   padding-left: 10px;
-  border-radius: 8px;
+  border-radius: 10px;
   text-decoration: none;
   p.enonce {
     color: #6c757d;

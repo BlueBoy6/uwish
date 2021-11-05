@@ -33,7 +33,6 @@ function useProvideWishlist() {
   }
 
   function modifyWishlist({ wishlistModified }) {
-    console.log("wishlistModified : ", wishlistModified);
     setWishlist(wishlistModified);
     return { success: true };
   }

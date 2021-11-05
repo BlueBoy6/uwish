@@ -4,12 +4,12 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
 export default function GroupResumeCard({ group }) {
-  const groupName = group.name;
   let history = useHistory();
+  console.log("group :", group);
   const enterToGroup = () => history.push(`/group/${group.id}`);
   return (
     <ResumeCard data-group-name={group.name} onClick={enterToGroup}>
-      {groupName}
+      {group.name}
     </ResumeCard>
   );
 }

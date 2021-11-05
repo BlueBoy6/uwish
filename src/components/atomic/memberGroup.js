@@ -10,7 +10,7 @@ const Member = styled.div`
   width: 100%;
   padding: 5px 10px;
   background: #17c3b2;
-  border-radius: 8px;
+  border-radius: 10px;
   margin-top: 8px;
   color: white;
 `;

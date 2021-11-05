@@ -2,7 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import Field from "components/form/Field";
 
-export default function inputText({ value, onChange, placeholder, label }) {
+export default function inputText({
+  value,
+  onChange,
+  placeholder,
+  label,
+  submit,
+}) {
+  const keyPress = (e) => {
+    if (e.key === "Enter") submit();
+  };
+
   return (
     <Field>
       <Label>{label}</Label>
@@ -11,6 +21,7 @@ export default function inputText({ value, onChange, placeholder, label }) {
         value={value}
         placeholder={placeholder}
         onChange={onChange}
+        onKeyPress={keyPress}
       />
     </Field>
   );
